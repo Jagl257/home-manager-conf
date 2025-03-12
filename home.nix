@@ -21,6 +21,8 @@
 		pkgs.direnv
 		pkgs.devenv
 		pkgs.cachix
+		pkgs.awscli2
+		pkgs.aws-vault
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
