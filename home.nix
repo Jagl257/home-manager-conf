@@ -79,22 +79,50 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 	programs = {
-		# fish = {
-		# 	enable = true;
-		# };
-		# zsh = {
-		# 	enable = true;
-		# 	initExtra = ''
-		# 		if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
-		# 		then
-		# 				exec fish -l
-		# 		fi
-		# 	'';
-		# };
-		# starship = {
-		# 	enable = true;
-		# 	enableFishIntegration = true;
-		# };
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
+
+      plugins = with pkgs.vimPlugins; [
+        catppuccin-nvim
+      ];
+
+      extraLuaConfig = ''
+        vim.opt.termguicolors = true
+
+
+        require("catppuccin").setup({
+          flavour = "mocha", -- Options: latte, frappe, macchiato, mocha
+          integrations = {
+            cmp = true,
+            gitsigns = true,
+            nvimtree = true,
+            treesitter = true,
+          },
+        })
+        vim.cmd.colorscheme("catppuccin")
+				vim.api.nvim_create_autocmd('FileType', {
+					pattern = { 'javascript', 'typescript', 'yaml', 'nix', 'terraform', 'json', 'tf' },
+					callback = function()
+						vim.bo.tabstop = 2
+						vim.bo.softtabstop = 2
+						vim.bo.shiftwidth = 2
+					end,
+				})
+
+				vim.api.nvim_create_autocmd('FileType', {
+					pattern = { 'python' },
+					callback = function()
+						vim.bo.tabstop = 4
+						vim.bo.softtabstop = 4
+						vim.bo.shiftwidth = 4
+					end,
+				})
+					'';
+    };
 		git = {
 			enable = true;
 			userName = "Jorge Guerra";
