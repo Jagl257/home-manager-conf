@@ -78,6 +78,8 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  xdg.configFile."nvim/lua".source = ./nvim-config/lua;
+
 	programs = {
     neovim = {
       enable = true;
@@ -90,29 +92,9 @@
         dracula-nvim
       ];
 
-      extraLuaConfig = ''
-        vim.opt.termguicolors = true
-
-        vim.cmd.colorscheme("dracula")
-				vim.api.nvim_create_autocmd('FileType', {
-					pattern = { 'javascript', 'typescript', 'yaml', 'nix', 'terraform', 'json', 'tf' },
-					callback = function()
-						vim.bo.tabstop = 2
-						vim.bo.softtabstop = 2
-						vim.bo.shiftwidth = 2
-					end,
-				})
-
-				vim.api.nvim_create_autocmd('FileType', {
-					pattern = { 'python' },
-					callback = function()
-						vim.bo.tabstop = 4
-						vim.bo.softtabstop = 4
-						vim.bo.shiftwidth = 4
-					end,
-				})
-					'';
+      extraLuaConfig = builtins.readFile ./nvim-config/init.lua;
     };
+
 		git = {
 			enable = true;
 			userName = "Jorge Guerra";
