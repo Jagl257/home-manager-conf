@@ -87,23 +87,13 @@
       vimdiffAlias = true;
 
       plugins = with pkgs.vimPlugins; [
-        catppuccin-nvim
+        dracula-nvim
       ];
 
       extraLuaConfig = ''
         vim.opt.termguicolors = true
 
-
-        require("catppuccin").setup({
-          flavour = "mocha", -- Options: latte, frappe, macchiato, mocha
-          integrations = {
-            cmp = true,
-            gitsigns = true,
-            nvimtree = true,
-            treesitter = true,
-          },
-        })
-        vim.cmd.colorscheme("catppuccin")
+        vim.cmd.colorscheme("dracula")
 				vim.api.nvim_create_autocmd('FileType', {
 					pattern = { 'javascript', 'typescript', 'yaml', 'nix', 'terraform', 'json', 'tf' },
 					callback = function()
