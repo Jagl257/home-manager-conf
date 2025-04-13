@@ -1,6 +1,3 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 vim.opt.number = true
 
 vim.opt.clipboard = 'unnamedplus'
@@ -9,8 +6,6 @@ vim.opt.breakindent = true
 
 
 vim.opt.termguicolors = true
-
-vim.cmd.colorscheme("dracula")
 
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })

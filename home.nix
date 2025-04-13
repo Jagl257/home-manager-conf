@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{config,pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -90,6 +90,9 @@
 
       plugins = with pkgs.vimPlugins; [
         dracula-nvim
+				telescope-nvim
+				plenary-nvim
+				telescope-fzf-native-nvim
       ];
 
       extraLuaConfig = builtins.readFile ./nvim-config/init.lua;
