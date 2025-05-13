@@ -18,27 +18,18 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+		pkgs.go
 		pkgs.direnv
 		pkgs.devenv
 		pkgs.cachix
 		pkgs.awscli2
 		pkgs.aws-vault
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+		pkgs.lua-language-server
+		pkgs.nodePackages.typescript-language-server
+		pkgs.terraform-ls
+		pkgs.yaml-language-server
+		pkgs.gopls
+		pkgs.python311Packages.python-lsp-server  # or use the latest python3 package
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -93,6 +84,10 @@
 				telescope-nvim
 				plenary-nvim
 				telescope-fzf-native-nvim
+				nvim-lspconfig
+				cmp-nvim-lsp
+			  nvim-cmp
+        CopilotChat-nvim
       ];
 
       extraLuaConfig = builtins.readFile ./nvim-config/init.lua;
