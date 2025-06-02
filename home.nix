@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{config,pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -18,28 +18,24 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+		pkgs.go
+		pkgs.docker
 		pkgs.direnv
 		pkgs.devenv
 		pkgs.cachix
 		pkgs.awscli2
 		pkgs.aws-vault
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+		pkgs.lua-language-server
+		pkgs.nodePackages.typescript-language-server
+		pkgs.terraform-ls
+		pkgs.yaml-language-server
+		pkgs.gopls
+		pkgs.python311Packages.python-lsp-server  # or use the latest python3 package
   ];
+
+	home.sessionVariables = {
+    DOCKER_HOST = "unix:///var/run/docker.sock";
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -78,23 +74,30 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  xdg.configFile."nvim/lua".source = ./nvim-config/lua;
+
 	programs = {
-		# fish = {
-		# 	enable = true;
-		# };
-		# zsh = {
-		# 	enable = true;
-		# 	initExtra = ''
-		# 		if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
-		# 		then
-		# 				exec fish -l
-		# 		fi
-		# 	'';
-		# };
-		# starship = {
-		# 	enable = true;
-		# 	enableFishIntegration = true;
-		# };
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
+
+      plugins = with pkgs.vimPlugins; [
+        dracula-nvim
+				telescope-nvim
+				plenary-nvim
+				telescope-fzf-native-nvim
+				nvim-lspconfig
+				cmp-nvim-lsp
+			  nvim-cmp
+        CopilotChat-nvim
+      ];
+
+      extraLuaConfig = builtins.readFile ./nvim-config/init.lua;
+    };
+
 		git = {
 			enable = true;
 			userName = "Jorge Guerra";
