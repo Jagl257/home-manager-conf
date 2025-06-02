@@ -8,4 +8,5 @@ require("telescope")
 require("telescope_mappings")
 require("lsp")
 
+require("copilot").setup()
 require("CopilotChat").setup()

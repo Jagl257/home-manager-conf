@@ -19,6 +19,7 @@
   # environment.
   home.packages = [
 		pkgs.go
+		pkgs.docker
 		pkgs.direnv
 		pkgs.devenv
 		pkgs.cachix
@@ -31,6 +32,10 @@
 		pkgs.gopls
 		pkgs.python311Packages.python-lsp-server  # or use the latest python3 package
   ];
+
+	home.sessionVariables = {
+    DOCKER_HOST = "unix:///var/run/docker.sock";
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
