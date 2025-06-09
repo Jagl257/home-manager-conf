@@ -5,7 +5,7 @@ let
 in
 
 {
-  home.activation.setFishAsDefaultShell = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.setFishAsDefaultShell = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if ! grep -qx "${fishPath}" /etc/shells; then
       echo "Adding ${fishPath} to /etc/shells"
       echo "${fishPath}" | /usr/bin/sudo tee -a /etc/shells

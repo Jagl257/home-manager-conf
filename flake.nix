@@ -4,35 +4,43 @@
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # home-manager = {
+    #   url = "github:nix-community/home-manager";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
-  outputs = { nixpkgs, home-manager, pre-commit-hooks, ... }:
+  outputs = { nixpkgs, /*home-manager,*/ pre-commit-hooks, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      homeConfigurations."jguerra" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+    in
+    {
+      # homeConfigurations."jguerra" = home-manager.lib.homeManagerConfiguration {
+      #   inherit pkgs;
+      #   modules = [ ./home.nix ];
+      # };
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./home.nix ];
+      devShells.${system}.default = pkgs.mkShell {
+        buildInputs = [
+          pkgs.openssl
+          pkgs.readline
+          pkgs.zlib
+          pkgs.bzip2
+          pkgs.sqlite
+          pkgs.xz
+          pkgs.libffi
+          pkgs.ncurses
+        ];
 
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
-      };
-
-      devShells.${system}.default = pre-commit-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = {
-          nixpkgs-fmt.enable = true;
-          typos.enable = true;
-          statix.enable = true;
+        shellHook = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixpkgs-fmt.enable = true;
+            #typos.enable = true;
+            statix.enable = true;
+          };
         };
       };
     };

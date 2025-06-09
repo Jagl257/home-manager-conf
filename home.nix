@@ -1,41 +1,44 @@
 { config, pkgs, ... }:
 
 {
-	imports = [
-		./modules/set-fish-shell.nix
-	];
-
-  home.username = "jguerra";
-  home.homeDirectory = "/home/jguerra";
-  home.stateVersion = "25.05"; # Please read the comment before changing.
-
-  home.packages = with pkgs; [
-		asdf-vm
-    docker
-    direnv
-    devenv
-    cachix
-    awscli2
-    aws-vault
-    lua-language-server
-    nodePackages.typescript-language-server
-    terraform-ls
-    yaml-language-server
-    gopls
-    nil
-    # python311Packages.python-lsp-server  # or use the latest python3 package
+  imports = [
+    ./modules/set-fish-shell.nix
   ];
 
-  home.sessionVariables = {
-    DOCKER_HOST = "unix:///var/run/docker.sock";
-    LC_ALL = "en_US.UTF-8";
-    LANG = "en_US.UTF-8";
-    EDITOR = "nvim";
+  # Remove the duplicate assignment of 'home' by merging all 'home.*' options under a single 'home' attribute set.
+  home = {
+    username = "jguerra";
+    homeDirectory = "/home/jguerra";
+    stateVersion = "25.05"; # Please read the comment before changing.
+
+    packages = with pkgs; [
+      docker
+      direnv
+      devenv
+      cachix
+      awscli2
+      aws-vault
+      lua-language-server
+      nodePackages.typescript-language-server
+      terraform-ls
+      yaml-language-server
+      gopls
+      nil
+      # python311Packages.python-lsp-server  # or use the latest python3 package
+    ];
+
+    sessionVariables = {
+      DOCKER_HOST = "unix:///var/run/docker.sock";
+      LC_ALL = "en_US.UTF-8";
+      LANG = "en_US.UTF-8";
+      EDITOR = "nvim";
+    };
+
+    file = { };
   };
 
-  home.file = {};
-
   programs.home-manager.enable = true;
+
   xdg.configFile."nvim/lua".source = ./nvim-config/lua;
 
   programs = {
@@ -45,9 +48,7 @@
     fish = {
       enable = true;
       shellInit = ''
-          set -gx PATH /nix/var/nix/profiles/default/bin $HOME/.nix-profile/bin $PATH
-					set -gx ASDF_DIR $HOME/.asdf
-					source $ASDF_DIR/asdf.fish	
+        set -gx PATH /nix/var/nix/profiles/default/bin $HOME/.nix-profile/bin $PATH
       '';
     };
     starship = {
