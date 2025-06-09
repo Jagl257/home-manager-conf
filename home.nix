@@ -40,7 +40,6 @@
   programs = {
     tmux = {
       enable = true;
-      shell = "${pkgs.bash}/bin/fish";
     };
     fish = {
       enable = true;
