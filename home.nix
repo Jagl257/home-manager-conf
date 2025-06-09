@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 {
 	imports = [
@@ -21,6 +21,7 @@
     terraform-ls
     yaml-language-server
     gopls
+    nil
     # python311Packages.python-lsp-server  # or use the latest python3 package
   ];
 
@@ -66,7 +67,6 @@
         nvim-lspconfig
         cmp-nvim-lsp
         nvim-cmp
-        CopilotChat-nvim
       ];
       extraPackages = with pkgs; [
         xclip

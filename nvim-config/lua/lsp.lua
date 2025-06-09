@@ -103,11 +103,15 @@ lspconfig.yamlls.setup = ({
 })
 
 lspconfig.pylsp.setup({
-	capabilites = capabilities,
+	capabilities = capabilities,
 })
 lspconfig.tsserver.setup({
-	capabilites = capabilities,
+	capabilities = capabilities,
 })
 lspconfig.gopls.setup({
-	capabilites = capabilities,
+	capabilities = capabilities,
+})
+
+lspconfig.nil_ls.setup({
+  capabilities = capabilities,
 })
