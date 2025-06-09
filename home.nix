@@ -47,38 +47,11 @@
           set -gx PATH /nix/var/nix/profiles/default/bin $HOME/.nix-profile/bin $PATH
       '';
     };
-    #starship = {
-    #  enable = true;
-    #  settings = {
-    #    shell = {
-    #      disabled = false;
-    #      format = "[$indicator]($style) ";
-    #      bash_indicator = "Bash";
-    #      zsh_indicator = "Zsh";
-    #      fish_indicator = "Fish";
-    #      style = "bold green";
-    #    };
-    #    nodejs = {
-    #      format = "via [⬢ $version](bold green) ";
-    #    };
-    #    python = {
-    #      format = "via [🐍 $version](bold blue) ";
-    #      detect_extensions = [ "py" ];
-    #    };
-    #    nix_shell = {
-    #      disabled = false;
-    #      format = "via [$symbol$state( $name)]($style) ";
-    #      symbol = "❄️ ";
-    #      style = "bold blue";
-    #    };
-    #    add_newline = true;
-    #    character = {
-    #      success_symbol = "[➜](bold green)";
-    #      error_symbol = "[✗](bold red)";
-    #    };
-    #    format = "$directory $nix_shell $git_branch $nodejs $python $character";
-    #  };
-    #};
+    starship = {
+      enable = true;
+      enableFishIntegration = true;
+      settings = builtins.fromTOML (builtins.readFile ./modules/starship/starship.toml);
+    };
     neovim = {
       enable = true;
       defaultEditor = true;
