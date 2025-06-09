@@ -10,6 +10,7 @@
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
+		asdf-vm
     docker
     direnv
     devenv
@@ -45,6 +46,8 @@
       enable = true;
       shellInit = ''
           set -gx PATH /nix/var/nix/profiles/default/bin $HOME/.nix-profile/bin $PATH
+					set -gx ASDF_DIR $HOME/.asdf
+					source $ASDF_DIR/asdf.fish	
       '';
     };
     starship = {
