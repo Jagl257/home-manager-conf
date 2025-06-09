@@ -1,0 +1,37 @@
+# Starship prompt configuration template
+
+add_newline = false
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[✗](bold red)"
+
+[directory]
+truncation_length = 3
+
+[git_branch]
+
+[nodejs]
+format = "via [⬢ $version](bold green) "
+
+[python]
+format = "via [🐍 $version]($style) [$virtualenv]($style) "
+detect_extensions = ["py"]
+style = "bold blue"
+
+[nix_shell]
+format = "via [$symbol$state( $name)]($style) "
+symbol = "❄️ "
+style = "bold blue"
+
+[aws]
+format = "on [$symbol $profile]($style) "
+symbol = "☁️ "
+style = "bold yellow"
+disabled = false
+
+[azure]
+format = "on [$symbol $subscription]($style) "
+symbol = "☁️ "
+style = "bold blue"
+disabled = false
