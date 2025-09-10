@@ -12,6 +12,7 @@
     stateVersion = "25.05"; # Please read the comment before changing.
 
     packages = with pkgs; [
+			postgresql
       docker
       direnv
       devenv
