@@ -1,4 +1,5 @@
 local lspconfig = require("lspconfig")
+local util = require("lspconfig.util")
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -10,6 +11,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
     map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
     map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+		map('gl', vim.diagnostic.open_float, 'Line dia[g]nostic f[lo]at')
     map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
     map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
     map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
@@ -17,6 +19,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
     map('K', vim.lsp.buf.hover, 'Hover Documentation')
     map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+		map('<leader>lh', function()
+			if vim.lsp.inlay_hint and vim.lsp.inlay_hint.is_enabled then
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+			end
+		end, "[L]ua: toggle inlay [H]ints")
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     if client and client.server_capabilities.documentHighlightProvider then
@@ -57,16 +64,31 @@ capabilities = vim.tbl_deep_extend(
   require("cmp_nvim_lsp").default_capabilities()
 )
 
+pcall(function()
+  require("neodev").setup({})
+end)
+
 lspconfig.lua_ls.setup({
-	capabilities = capabilities,
+  capabilities = capabilities,
+  cmd = { "lua-language-server" },
+  root_dir = util.root_pattern(".git", ".luarc.json", ".luacheckrc", "lua/") or vim.fn.getcwd(),
   settings = {
     Lua = {
+      runtime = { version = "LuaJIT" },
       diagnostics = {
         globals = { "vim" },
       },
-      completion = {
-        callSnippet = "Replace",
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.fn.expand("$VIMRUNTIME/lua"),
+          vim.fn.stdpath("config") .. "/lua",
+        },
       },
+      completion = { callSnippet = "Replace" },
+      hint = { enable = true },
+      telemetry = { enable = false },
+      format = { enable = true },
     },
   },
 })
