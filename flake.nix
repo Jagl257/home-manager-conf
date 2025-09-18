@@ -2,7 +2,6 @@
   description = "Home Manager configuration of jguerra";
 
   inputs = {
-    # pick either a stable nixpkgs or keep nixos-unstable; this example uses unstable
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
@@ -18,7 +17,6 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
   in {
-    # --- THIS is the piece nix is complaining about. Export it.
     homeConfigurations."jguerra" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
@@ -26,13 +24,11 @@
         {
           home.username = "jguerra";
           home.homeDirectory = "/home/jguerra";
-          # Set once and keep stable (match your HM release if you pin releases)
           home.stateVersion = "25.05";
         }
       ];
     };
 
-    # Keep your dev shell
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = with pkgs; [ openssl openssl.dev readline zlib bzip2 sqlite xz libffi ncurses ];
       shellHook = ''

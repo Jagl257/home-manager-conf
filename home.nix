@@ -5,11 +5,10 @@
     ./modules/set-fish-shell.nix
   ];
 
-  # Remove the duplicate assignment of 'home' by merging all 'home.*' options under a single 'home' attribute set.
   home = {
     username = "jguerra";
     homeDirectory = "/home/jguerra";
-    stateVersion = "25.05"; # Please read the comment before changing.
+    stateVersion = "25.05"; 
 
     packages = with pkgs; [
 			postgresql
