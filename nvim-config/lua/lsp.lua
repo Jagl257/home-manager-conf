@@ -107,7 +107,7 @@ lspconfig.terraformls.setup({
   },
 })
 
-lspconfig.yamlls.setup = ({
+lspconfig.yamlls.setup({
 	capabilities = capabilities,
   filetypes = { 'yaml', 'yml' },
   settings = {
