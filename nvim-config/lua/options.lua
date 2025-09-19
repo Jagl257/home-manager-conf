@@ -4,8 +4,10 @@ vim.opt.clipboard = 'unnamed,unnamedplus'
 
 vim.opt.breakindent = true
 
-
 vim.opt.termguicolors = true
+
+vim.o.updatetime = 500
+
 
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
