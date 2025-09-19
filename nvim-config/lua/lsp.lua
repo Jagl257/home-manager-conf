@@ -124,10 +124,64 @@ lspconfig.yamlls.setup({
   },
 })
 
-lspconfig.pylsp.setup({
-	capabilities = capabilities,
-})
 lspconfig.tsserver.setup({
+  capabilities = capabilities,
+  -- Keep formatting ON (we're using tsserver for now)
+  -- Nice ergonomics: inlay hints + preferences similar to VSCode
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+      preferences = {
+        includeCompletionsForModuleExports = true,
+        includeCompletionsWithInsertTextCompletions = true,
+        includeCompletionsWithSnippetText = true,
+        includeCompletionsWithClassMemberSnippets = true,
+        importModuleSpecifierPreference = "auto", -- or "relative" / "non-relative"
+        importModuleSpecifierEnding = "auto",
+        allowIncompleteCompletions = true,
+        allowRenameOfImportPath = true,
+      },
+      format = {
+        -- basic tsserver formatter toggles (not Prettier)
+        semicolons = "insert",
+        convertTabsToSpaces = true,
+        indentSize = 2,
+        tabSize = 2,
+        placeOpenBraceOnNewLineForFunctions = false,
+        placeOpenBraceOnNewLineForControlBlocks = false,
+      },
+    },
+    javascript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+      preferences = {
+        importModuleSpecifierPreference = "auto",
+        importModuleSpecifierEnding = "auto",
+      },
+      format = {
+        semicolons = "insert",
+        convertTabsToSpaces = true,
+        indentSize = 2,
+        tabSize = 2,
+      },
+    },
+  },
+})
+lspconfig.pylsp.setup({
 	capabilities = capabilities,
 })
 lspconfig.gopls.setup({
