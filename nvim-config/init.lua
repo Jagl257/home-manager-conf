@@ -3,6 +3,7 @@ vim.g.maplocalleader = " "
 
 vim.cmd.colorscheme("dracula")
 
+require("completion")
 require("options")
 require("treesitter")
 require("telescope")

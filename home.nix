@@ -79,6 +79,7 @@
         nvim-lspconfig
         cmp-nvim-lsp
         nvim-cmp
+				luasnip
       ];
       extraPackages = with pkgs; [
         xclip
