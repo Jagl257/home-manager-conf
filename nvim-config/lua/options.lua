@@ -14,8 +14,15 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.filetype.add({
+	extension = {
+		tsx = "typescriptreact",
+		jsx = "javascriptreact",
+	},
+})
+
 vim.api.nvim_create_autocmd('FileType', {
-	pattern = { 'lua', 'javascript', 'typescript', 'yaml', 'nix', 'terraform', 'json', 'tf' },
+	pattern = { 'lua', 'javascript', 'typescript', 'yaml', 'nix', 'terraform', 'json', 'tf', 'typescriptreact', 'javascriptreact', 'astro' },
 	callback = function()
 		vim.bo.tabstop = 2
 		vim.bo.softtabstop = 2

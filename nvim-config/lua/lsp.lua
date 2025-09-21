@@ -131,8 +131,12 @@ lspconfig.yamlls.setup({
 
 lspconfig.tsserver.setup({
   capabilities = capabilities,
-  -- Keep formatting ON (we're using tsserver for now)
-  -- Nice ergonomics: inlay hints + preferences similar to VSCode
+	cmd = { "typescript-language-server", "--stdio" },
+  filetypes = {
+    "typescript", "typescriptreact",
+    "javascript", "javascriptreact"
+  },
+  root_dir = util.root_pattern("tsconfig.json", "jsconfig.json", "package.json", ".git"),
   settings = {
     typescript = {
       inlayHints = {
@@ -195,4 +199,11 @@ lspconfig.gopls.setup({
 
 lspconfig.nil_ls.setup({
   capabilities = capabilities,
+})
+
+lspconfig.astro.setup({
+  capabilities = capabilities,
+  cmd = { "astro-ls", "--stdio" },
+  filetypes = { "astro" },
+  root_dir = util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
 })

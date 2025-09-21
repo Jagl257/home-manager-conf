@@ -21,6 +21,7 @@
       aws-vault
       lua-language-server
       nodePackages.typescript-language-server
+			nodePackages."@astrojs/language-server"
       terraform-ls
       yaml-language-server
       gopls
@@ -82,6 +83,8 @@
         cmp-nvim-lsp
         nvim-cmp
 				luasnip
+				nvim-autopairs
+				nvim-ts-autotag
       ];
       extraPackages = with pkgs; [
         xclip
