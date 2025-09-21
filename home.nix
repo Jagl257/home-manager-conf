@@ -63,6 +63,15 @@
       vimAlias = true;
       vimdiffAlias = true;
       plugins = with pkgs.vimPlugins; [
+				(nvim-treesitter.withPlugins (p: [
+			    p.tree-sitter-typescript
+			    p.tree-sitter-tsx
+			    p.tree-sitter-javascript
+			    p.tree-sitter-json
+			    p.tree-sitter-yaml
+			    p.tree-sitter-lua
+			    p.tree-sitter-bash
+			  ]))
         dracula-nvim
         telescope-nvim
         plenary-nvim
@@ -70,6 +79,7 @@
         nvim-lspconfig
         cmp-nvim-lsp
         nvim-cmp
+				luasnip
       ];
       extraPackages = with pkgs; [
         xclip
