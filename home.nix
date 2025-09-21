@@ -11,6 +11,7 @@
     stateVersion = "25.05"; 
 
     packages = with pkgs; [
+			asdf-vm
 			postgresql
       docker
       direnv
@@ -49,6 +50,7 @@
       enable = true;
       shellInit = ''
         set -gx PATH /nix/var/nix/profiles/default/bin $HOME/.nix-profile/bin $PATH
+				source ${pkgs.asdf-vm}/share/asdf-vm/asdf.fish
       '';
     };
     starship = {

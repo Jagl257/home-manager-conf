@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 
 let
   fishPath = "${config.home.profileDirectory}/bin/fish";
