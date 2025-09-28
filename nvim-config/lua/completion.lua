@@ -1,5 +1,8 @@
+require("nvim-autopairs").setup({})
+
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
 cmp.setup({
   snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
@@ -30,9 +33,12 @@ cmp.setup({
 
   sources = {
     { name = 'nvim_lsp' },
+    { name = "buffer" },
+    { name = "path" },
   },
   experimental = {
     ghost_text = true, -- inline preview (like “shadow” text)
   },
 })
 
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
