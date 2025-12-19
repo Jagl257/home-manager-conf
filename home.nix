@@ -11,6 +11,7 @@
     stateVersion = "25.05"; 
 
     packages = with pkgs; [
+			nerd-fonts.jetbrains-mono
 			asdf-vm
 			postgresql
       docker
@@ -75,6 +76,7 @@
 			    p.tree-sitter-lua
 			    p.tree-sitter-bash
 			  ]))
+				tokyonight-nvim
         dracula-nvim
         telescope-nvim
         plenary-nvim
@@ -85,6 +87,9 @@
 				luasnip
 				nvim-autopairs
 				nvim-ts-autotag
+				neo-tree-nvim
+				nui-nvim
+				nvim-web-devicons
       ];
       extraPackages = with pkgs; [
         xclip
