@@ -15,7 +15,10 @@
   outputs = { self, nixpkgs, home-manager, pre-commit-hooks, ... }:
   let
     system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
+    pkgs = import nixpkgs { 
+			inherit system;
+			config.allowUnfree=true;
+		};
   in {
     homeConfigurations."jagl257" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
