@@ -3,6 +3,7 @@
 {
   imports = [
     ./modules/set-fish-shell.nix
+		./modules/claude/claude.nix
   ];
 
   home = {
