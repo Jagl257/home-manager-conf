@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of jguerra";
+  description = "Home Manager configuration of jagl257";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -17,13 +17,13 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
   in {
-    homeConfigurations."jguerra" = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations."jagl257" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
         ./home.nix
         {
-          home.username = "jguerra";
-          home.homeDirectory = "/home/jguerra";
+          home.username = "jagl257";
+          home.homeDirectory = "/home/jagl257";
           home.stateVersion = "25.05";
         }
       ];

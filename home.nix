@@ -6,8 +6,8 @@
   ];
 
   home = {
-    username = "jguerra";
-    homeDirectory = "/home/jguerra";
+    username = "jagl257";
+    homeDirectory = "/home/jagl257";
     stateVersion = "25.05"; 
 
     packages = with pkgs; [
