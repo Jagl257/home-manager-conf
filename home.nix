@@ -54,6 +54,18 @@
         set -gx PATH /nix/var/nix/profiles/default/bin $HOME/.nix-profile/bin $PATH
 				source ${pkgs.asdf-vm}/share/asdf-vm/asdf.fish
       '';
+      shellAliases = {
+        # Git aliases
+        gst = "git status";
+        gad = "git add";
+        gcm = "git commit";
+        gca = "git commit --amend";
+        glg = "git log --oneline";
+        gco = "git checkout";
+        gcb = "git checkout -b";
+        # Tmux alias
+        tmx = "tmux";
+      };
     };
     starship = {
       enable = true;
