@@ -13,7 +13,7 @@ in
 
     if [ "$SHELL" != "${fishPath}" ]; then
       echo "Changing shell to ${fishPath}"
-      /usr/bin/chsh -s "${fishPath}" "$USER"
+      /usr/bin/sudo /usr/sbin/usermod -s "${fishPath}" "$USER"
     fi
   '';
 }
