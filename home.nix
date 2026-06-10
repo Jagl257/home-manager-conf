@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -9,7 +9,8 @@
   home = {
     username = "jagl257";
     homeDirectory = "/home/jagl257";
-    stateVersion = "25.05"; 
+    stateVersion = "25.05";
+    enableNixpkgsReleaseCheck = false; 
 
     packages = with pkgs; [
 			nerd-fonts.jetbrains-mono
@@ -22,13 +23,27 @@
       awscli2
       aws-vault
       lua-language-server
-      nodePackages.typescript-language-server
-			nodePackages."@astrojs/language-server"
+      typescript-language-server
       terraform-ls
       yaml-language-server
       gopls
       nil
       # python311Packages.python-lsp-server  # or use the latest python3 package
+
+      # xdg-open wrapper for WSL - forwards to wslview to open URLs in Windows browser
+      (writeShellScriptBin "xdg-open" ''
+        #!/usr/bin/env bash
+        # WSL xdg-open wrapper that forwards to wslview
+        # This makes Linux applications (like GitLab MCP) open URLs in Windows browser
+
+        if [ $# -eq 0 ]; then
+          echo "Usage: xdg-open <url|file>" >&2
+          exit 1
+        fi
+
+        # Forward all arguments to wslview
+        exec /usr/bin/wslview "$@"
+      '')
     ];
 
     sessionVariables = {
@@ -40,6 +55,9 @@
 
     file = { };
   };
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "claude-code"
+  ];
 
   programs.home-manager.enable = true;
 
@@ -53,19 +71,34 @@
       enable = true;
       shellInit = ''
         set -gx PATH /nix/var/nix/profiles/default/bin $HOME/.nix-profile/bin $PATH
-				source ${pkgs.asdf-vm}/share/asdf-vm/asdf.fish
+        set -gx BROWSER \"wslview\"
+        fish_add_path $HOME/.asdf/shims
       '';
       shellAliases = {
         # Git aliases
         gst = "git status";
         gad = "git add";
-        gcm = "git commit";
+        gcm = "git commit -m";
         gca = "git commit --amend";
         glg = "git log --oneline";
         gco = "git checkout";
         gcb = "git checkout -b";
         # Tmux alias
         tmx = "tmux";
+        gaa = "git add .";
+        gcam = "git commit -am";
+        gp = "git pull";
+        gpu = "git push";
+        gpf = "git push --force";
+        grb = "git rebase";
+        gre = "git reset";
+        grh = "git reset --hard";
+        glo = "git log --oneline";
+        grl = "git reflog";
+        gd = "git diff";
+        gb = "git branch";
+        tmxn = "tmux new -s";
+        tmxa = "tmux attach";
       };
     };
     starship = {
@@ -107,14 +140,18 @@
       extraPackages = with pkgs; [
         xclip
       ];
-      extraLuaConfig = builtins.readFile ./nvim-config/init.lua;
+      initLua = builtins.readFile ./nvim-config/init.lua;
+      withRuby = true;
+      withPython3 = true;
     };
     git = {
       enable = true;
-      userName = "Jorge Guerra";
-      userEmail = "jagl257@gmail.com";
-      aliases = {
-        co = "checkout";
+      settings = {
+        user = {
+          name = "Jorge Guerra";
+          email = "jagl257@gmail.com";
+        };
+
       };
     };
   };
